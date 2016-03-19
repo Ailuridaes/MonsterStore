@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="store">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body ng-controller="StoreController as store">
+    <header>
+      <h1 class="text-center">Monsters 'N More</h1>
+      <h2 class="text-center">- an Angular pet store -</h2>
+    </header>
+    <li class="list-group-item" ng-repeat="monster in store.monsters">
+      <h3>
+        {{monster.name}}
+        <em class="pull-right">{{monster.price | currency}}</em>
+      </h3>
+
+      <div class ="gallery" ng-show="monster.images.length" ng-controller="GalleryController as gallery">
+        <img class="monster-image center-block" ng-src="{{monster.images[gallery.current]}}" />
+        <ul class="img-thumbnails clearfix" ng-show="monster.images.length > 1">
+          <li class="small-image pull-left thumbnail" ng-repeat="image in monster.images" ng-click="gallery.setCurrent($index)">
+            <img ng-src="{{image}}" />
+          </li>
+        </ul>
+      </div>
+
+      <section ng-controller="PanelController as panel">
+        <ul class="nav nav-pills">
+          <li ng-class="{active:panel.isSelected(1)}">
+            <a href ng-click="panel.selectTab(1)">Description</a>
+          </li>
+          <li ng-class="{active:panel.isSelected(2)}">
+            <a href ng-click="panel.selectTab(2)">Specifications</a>
+          </li>
+          <li ng-class="{active:panel.isSelected(3)}">
+            <a href ng-click="panel.selectTab(3)">Reviews</a>
+          </li>
+        </ul>
+        <div class="panel" ng-show="panel.isSelected(1)">
+          <h4>Description</h4>
+          <p> {{monster.description}} </p>
+        </div>
+        <div class="panel" ng-show="panel.isSelected(2)">
+          <h4>Specifications</h4>
+          <p>None yet.</p>
+        </div>
+        <div class="panel" ng-show="panel.isSelected(3)">
+          <ul>
+            <h4>Reviews</h4>
+            <li ng-repeat="review in monster.reviews">
+              <blockquote>
+                <b>Stars: {{review.stars}}</b>
+                {{review.body}}
+                <cite class="clearfix">by: {{review.author}}</cite>
+              </blockquote>
+            </li>
+            <blockquote ng-hide="monster.reviews.length">
+              No reviews yet, why don't you add your own?
+            </blockquote>
+          </ul>
+
+          <!-- Review Form -->
+          <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(monster)">
+            <!-- Live Preview -->
+            <blockquote ng-show="reviewCtrl.review.stars || reviewCtrl.review.body">
+              <b>Stars: {{reviewCtrl.review.stars}}</b>
+              {{reviewCtrl.review.body}}
+              <cite class="clearfix">by: {{reviewCtrl.review.author}}</cite>
+            </blockquote>
+
+            <!-- Review Form -->
+            <h4>Submit a Review</h4>
+            <fieldset class="form-group">
+              <select ng-model="reviewCtrl.review.stars" class="form-control" ng-options="stars for stars in [5,4,3,2,1]"  title="Stars">
+                <option value="">Rate your Monster!</option>
+              </select>
+            </fieldset>
+            <fieldset class="form-group">
+              <textarea ng-model="reviewCtrl.review.body" class="form-control"></textarea>
+            </fieldset>
+            <fieldset class="form-group">
+              <input ng-model="reviewCtrl.review.author" class="form-control" placeholder="Your Name" title="Email" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input type="submit" class="btn btn-primary pull-right" value="Submit Review" />
+            </fieldset>
+          </form>
+        </div>
+      </section>
+      <button ng-show="monster.canPurchase">Add to Cart</button>
+    </li>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
