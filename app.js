@@ -34,6 +34,41 @@
     };
   });
 
+  app.directive('monsterTitle', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'monster-title.html'
+    };
+  });
+
+  app.directive('monsterDescription', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'monster-description.html'
+    };
+  });
+
+  app.directive("monsterSpecs", function() {
+    return {
+      restrict: 'A',
+      templateUrl: 'monster-specs.html'
+    };
+  });
+
+  app.directive("review", function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'review.html'
+    };
+  });
+
+  app.directive("reviewForm", function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'review-form.html'
+    };
+  });
+
   var monsters = [
     {
       name: 'Marlboro',
