@@ -1,5 +1,5 @@
 <!-- Review Form -->
-<form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(monster)" novalidate>
+<form name="reviewForm" ng-submit="reviewForm.$valid && reviewCtrl.addReview(monster)" novalidate>
   <!-- Live Preview -->
   <blockquote ng-show="reviewCtrl.review.stars || reviewCtrl.review.body">
     <b>Stars: {{reviewCtrl.review.stars}}</b>
