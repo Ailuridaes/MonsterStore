@@ -70,8 +70,8 @@
         this.review = {};
 
         this.addReview = function(monster) {
-        monster.reviews.push(this.review);
-        this.review = {};
+          monster.reviews.push(this.review);
+          this.review = {};
         };
       },
       controllerAs: 'reviewCtrl'
